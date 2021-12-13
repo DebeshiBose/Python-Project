@@ -1,0 +1,77 @@
+import numpy as np
+import pandas as pd
+hr = pd.read_csv(r"C:\Users\Debeshi\Downloads\HRDataset_v14.csv")
+print(hr)
+print(hr.head)
+print(hr.shape)
+print(hr['Sex'].unique())
+print(hr['Sex'].replace('M ','Male',inplace=True))
+print(hr['Sex'].replace('F','Female',inplace=True))
+print(hr['Sex'].unique())
+print(hr['MarriedID'].replace(0,'Female',inplace=True))
+print(hr['MarriedID'].replace(1,'Male',inplace=True))
+print(hr['MarriedID'].unique())
+print(hr['Sex'].value_counts())
+import matplotlib.pyplot as plt
+
+left = [1, 2]
+height = [136, 177]
+tick_label = ['Male', 'Female']
+plt.bar(left, height, tick_label=tick_label,
+        width=0.8, color=['red', 'green'])
+plt.xlabel('Gender')
+plt.ylabel('Count')
+plt.title('Count of Gender in Organisation')
+plt.show()
+
+import seaborn as sns
+plt.figure(figsize=(5,5))
+ax=sns.countplot(x=hr['MarriedID'])
+ax.set_title(label = "Count of Married Employee", fontsize = 16)
+print(plt.show())
+
+plt.figure(figsize=(5,8))
+ax2=sns.countplot(x=hr['Department'],hue=hr['Sex'])
+print(plt.show())
+
+hr['Department'].value_counts().plot(kind='pie')
+plt.title("Departments in Organisation", bbox={'facecolor':'0.8', 'pad':5})
+print(plt.show())
+print(hr['Department'].value_counts())
+
+left = [1, 2, 3]
+height = [296,5, 13]
+tick_label = ['US Citizen', 'Non Citzen', 'Eligible Non-Citizen']
+plt.bar(left, height, tick_label=tick_label,
+        width=0.8, color=['Violet', 'Blue', 'Black'])
+plt.xlabel('Type of Citizen')
+plt.ylabel('Count')
+plt.title('Different Citizens')
+plt.show()
+
+plt.figure(figsize=(2,2))
+ax3=sns.histplot(x=hr['Department'],hue=hr['Position'])
+plt.show()
+
+print(hr['RecruitmentSource'].describe())
+
+sns.countplot(y=hr['PerformanceScore'],hue=hr['Department'])
+ax.set_title(label = "Performance by Gender", fontsize = 16)
+print(plt.show())
+
+sns.countplot(y=hr['PerformanceScore'],hue=hr['Sex'])
+ax.set_title(label = "Performance by Gender", fontsize = 16)
+print(plt.show())
+
+plt.figure(figsize=(20,80))
+sns.countplot(y=hr['ManagerName'],hue=hr['PerformanceScore'])
+print(plt.show())
+
+Dept_sum=hr.groupby('Department')['Absences'].sum()
+Dept_sum.plot(kind='bar')
+print(plt.show())
+
+pos_sum=hr.groupby(['Position','Department'])['Salary'].sum()
+plt.figure(figsize=(20,5))
+pos_sum.plot(kind='bar')
+print(plt.show())
